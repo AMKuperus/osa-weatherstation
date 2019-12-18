@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Gegenereerd op: 30 okt 2019 om 19:59
--- Serverversie: 10.2.26-MariaDB-cll-lve
+-- Gegenereerd op: 18 dec 2019 om 20:06
+-- Serverversie: 10.2.27-MariaDB-cll-lve
 -- PHP-versie: 5.5.38
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -45,9 +45,9 @@ CREATE TABLE `Measurements` (
 
 CREATE TABLE `Station` (
   `ID_Station` int(11) NOT NULL,
-  `Naam` text CHARACTER SET ascii NOT NULL,
-  `Locatie` text NOT NULL,
-  `Opmerking` text NOT NULL
+  `Name` text CHARACTER SET ascii NOT NULL,
+  `Location` text NOT NULL,
+  `Note` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
