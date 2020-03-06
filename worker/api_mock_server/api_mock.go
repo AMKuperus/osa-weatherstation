@@ -13,5 +13,5 @@ func main() {
 		w.Write([]byte(osaJSON))
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8180", nil)) //port 8180 used otherwise get conflict with docker mock db
 }

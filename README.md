@@ -17,7 +17,7 @@ container name: osa
 connectig command line: docker exec -it osa /bin/sh
 
 to confiure database:
-mysql -u pi -p weather < export_db.sql
+mysql -u pi -p weather < /tmp/database/export_db.sql
 
 
 Delete old docker containers: docker system prune
