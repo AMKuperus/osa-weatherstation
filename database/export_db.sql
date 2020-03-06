@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Measurements` (
-  `ID_Measurements` int(11) NOT NULL,
+  `ID_Measurements` int(11) NOT NULL AUTO_INCREMENT
   `ID_Station` int(11) NOT NULL,
   `Datetime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `Temperature` float NOT NULL,

@@ -1,0 +1,27 @@
+# Use root/example as user/password credentials
+# Use pi/framboos
+version: '3.1'
+
+services:
+
+  db:
+    image: mariadb
+    container_name: osa
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: framboos
+      MYSQL_DATABASE: weather
+      MYSQL_USER: pi
+      MYSQL_PASSWORD: framboos
+
+    volumes:
+      - ../database:/tmp/database
+    ports:
+      - 3306:3306
+    
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
