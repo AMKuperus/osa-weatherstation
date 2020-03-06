@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
 type message struct {
@@ -14,28 +15,38 @@ type message struct {
 	Humidity    float64 `json:"humidity"`
 }
 
-func connect() {
+type con struct {
+	url  string
+	port string
+}
+
+func newConnectionOsa(url, port string) con {
+	var c con
+	c.url = url
+	c.port = port
+
+	return c
+}
+
+func (c *con) weatherStation(delay time.Duration) message {
 
 	var message message
 	var client http.Client
-	var port string
 
-	ipWeaterStation := "localhost"
-	port = "8080"
+	time.Sleep(delay * time.Second)
 
-	req, err := http.NewRequest("GET", "http://"+ipWeaterStation+":"+port, nil)
+	req, err := http.NewRequest("GET", c.url+":"+c.port, nil)
 	if err != nil {
-		log.Println("Error in request url", err)
+		log.Fatal("error in request url", err)
 	}
 
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatal("Error request", err)
+		log.Fatal("error request", err)
 	}
 
-	log.Println("Http status code: ", resp.StatusCode)
 	if resp.StatusCode != http.StatusOK {
-		log.Println("Error Starus code ", resp.StatusCode)
+		log.Fatal("error Starus code ", resp.StatusCode)
 	} else {
 		bBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
@@ -47,44 +58,16 @@ func connect() {
 			log.Println("Body error", err)
 		}
 	}
-	fmt.Println("body: ", message)
-	return
+
+	return message
 }
 
 func main() {
-	// ticker := time.NewTicker(1 * time.Second)
-	// sigs := make(chan os.Signal, 1)
-	// //done := make(chan bool)
 
-	// signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+	c := newConnectionOsa("http://localhost", "8080")
 
-	// go func() {
-	// 	for {
-	// 		select {
-	// 		case <-sigs:
-	// 			return
-	// 		case <-ticker.C:
-	// 			connect()
-	// 		}
-	// 	}
-	// }()
-	connect()
-	//time.Sleep(5 * time.Second)
-	// sigs := make(chan os.Signal, 1)
-	// done := make(chan bool, 1)
-
-	// signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
-
-	// go func() {
-	// 	sig := <-sigs
-	// 	fmt.Println()
-	// 	fmt.Println(sig)
-	// 	done <- true
-	// }()
-	// fmt.Println("awaiting signal")
-	// connect()
-
-	// <-done
-	// fmt.Println("exiting")
+	for {
+		fmt.Printf("Read at %v: \n", c.weatherStation(2))
+	}
 
 }
